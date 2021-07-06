@@ -192,7 +192,9 @@ class Netperf(Test):
             self.peer_networkinterface.set_mtu('1500')
         except Exception:
             self.peer_public_networkinterface.set_mtu('1500')
-        self.networkinterface.remove_ipaddr(self.ipaddr, self.netmask)
+        detected_distro = distro.detect()
+        if detected_distro.name != "rhel":
+            self.networkinterface.remove_ipaddr(self.ipaddr, self.netmask)
         try:
             self.networkinterface.restore_from_backup()
         except Exception:
